@@ -46,7 +46,6 @@ function numberPress(number) {
 
 function operationPress(op) {
     let localOperationMemory = display.value;
-
     if (MemoryNewNumber && MemoryPendingOperation !== '=') {
         display.value = MemoryCurrentNumber;
     } else {
@@ -57,14 +56,27 @@ function operationPress(op) {
             MemoryCurrentNumber -= +localOperationMemory;
         } else if (MemoryPendingOperation === '*') {
             MemoryCurrentNumber *= +localOperationMemory;
+        } else if (op === '√') {
+            MemoryCurrentNumber = Math.sqrt(+localOperationMemory);
         } else if (MemoryPendingOperation === '/') {
             MemoryCurrentNumber /= +localOperationMemory;
+        } else if (MemoryPendingOperation === '^') {
+            MemoryCurrentNumber **= +localOperationMemory;
         } else {
             MemoryCurrentNumber = +localOperationMemory;
         }
-        display.value = MemoryCurrentNumber;
         MemoryPendingOperation = op;
+
+
+        display.value = MemoryCurrentNumber;
     }
+}
+
+for (let i = 0; i < operations.length; i++) {
+    let operationBtn = operations[i];
+    operationBtn.addEventListener('click', function (e) {
+        sqrt(e.target.textContent);
+    });
 }
 
 function decimal(argument) {
